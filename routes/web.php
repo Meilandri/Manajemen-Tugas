@@ -10,14 +10,18 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-// Dashboard
-Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+// Login
+Route::get('login', [AuthController::class, 'login'])->name('login'); 
+Route::post('login', [AuthController::class, 'loginProses'])->name('loginProses');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout'); 
 
-// login
-Route::get('login',[AuthController::class,'login'])->name ('login'); 
-
-// user
-Route::get('user',[UserController::class,'index'])->name ('user'); 
-
-// Tugas
-Route::get('tugas',[TugasController::class,'index'])->name ('tugas'); 
+Route::middleware('checkLogin')->group(function() {
+    // Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // User
+    Route::get('user', [UserController::class, 'index'])->name('user'); 
+    
+    // Tugas
+    Route::get('tugas', [TugasController::class, 'index'])->name('tugas'); 
+});
