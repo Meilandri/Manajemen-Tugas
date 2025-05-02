@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserExport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -98,8 +99,19 @@ class UserController extends Controller
         return redirect()->route('user')->with('success', 'Data Berhasil Di Hapus');
     }
 
+    public function excel(){
+        $filename = now()->format('d-m-Y H.i.s');
+        $data = array(
+            'user'      => User::get(),
+            'tanggal'   => now()->format('d-m-Y'),
+            'jam'       => now()->format('H.i.s'),
+        );
+        return Excel::download(new UserExport, 'DataUser_'.$filename.' .xlsx');
+        
+    }
+
     public function pdf(){
-        $filename = now()->format('d-m-Y-H-i-s');
+        $filename = now()->format('d-m-Y H.i.s');
         $data = array(
             'user'      => User::get(),
             'tanggal'   => now()->format('d-m-Y'),
