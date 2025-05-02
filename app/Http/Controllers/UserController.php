@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -94,5 +96,17 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('user')->with('success', 'Data Berhasil Di Hapus');
+    }
+
+    public function pdf(){
+        $filename = now()->format('d-m-Y-H-i-s');
+        $data = array(
+            'user'      => User::get(),
+            'tanggal'   => now()->format('d-m-Y'),
+            'jam'       => now()->format('H.i.s'),
+        );
+
+        $pdf = Pdf::loadView('admin/user/pdf', $data);
+        return $pdf->download('DataUser_'.$filename.' .pdf');
     }
 }

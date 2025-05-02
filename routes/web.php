@@ -26,6 +26,7 @@ Route::middleware('checkLogin')->group(function() {
     Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('userEdit'); 
     Route::post('user/update/{id}', [UserController::class, 'update'])->name('userUpdate');
     Route::delete('user/destroy/{id}', [UserController::class, 'destroy'])->name('userDestroy');
+    Route::get('user/pdf', [UserController::class, 'pdf'])->name('userPdf');
     
     // Tugas
     Route::get('tugas', [TugasController::class, 'index'])->name('tugas'); 
