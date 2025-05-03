@@ -39,7 +39,7 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <div class="badge badge-primary justify-content-center d-flex">
-                                        Admin
+                                        {{auth() -> user() -> jabatan}}
                                     </div>
                                 </a>
                                 <a class="dropdown-item" href="#">
