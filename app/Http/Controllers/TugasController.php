@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Tugas;
 use App\Exports\TugasExport;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -105,5 +106,17 @@ class TugasController extends Controller
         );
         return Excel::download(new TugasExport, 'DataTugas_'.$filename.' .xlsx');
         
+    }
+
+    public function pdf(){
+        $filename = now()->format('d-m-Y H.i.s');
+        $data = array(
+            'tugas'      => Tugas::with('user')->get(),
+            'tanggal'    => now()->format('d-m-Y'),
+            'jam'        => now()->format('H.i.s'),
+        );
+
+        $pdf = Pdf::loadView('admin/tugas/pdf', $data);
+        return $pdf->download('DataUser_'.$filename.' .pdf');
     }
 }
