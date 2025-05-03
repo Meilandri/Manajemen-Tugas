@@ -25,8 +25,9 @@
               Email
             </div>
             <div class="col-6">
+              :
                 <span class="badge badge-info">
-                    : {{ $item->email }}
+                     {{ $item->email }}
                 </span>
             </div>
         </div>
