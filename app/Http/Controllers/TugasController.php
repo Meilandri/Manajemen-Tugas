@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tugas;
+use App\Exports\TugasExport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class TugasController extends Controller
 {
@@ -93,5 +96,14 @@ class TugasController extends Controller
         return redirect()->route('tugas')->with('success', 'Tugas dihapus');
     }
     
-          
+    public function excel(){
+        $filename = now()->format('d-m-Y H.i.s');
+        $data = array(
+            'user'      => User::get(),
+            'tanggal'   => now()->format('d-m-Y'),
+            'jam'       => now()->format('H.i.s'),
+        );
+        return Excel::download(new TugasExport, 'DataTugas_'.$filename.' .xlsx');
+        
+    }
 }
