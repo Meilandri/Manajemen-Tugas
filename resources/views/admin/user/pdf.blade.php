@@ -3,7 +3,7 @@
 <h3 align="center">Pukul : {{ $jam }}</h3>
 
 <hr>
- <table width="100%" border="ipx" style="border-collapse: collapse;">  
+ <table width="100%" border="1px" style="border-collapse: collapse;">  
     <thead>
     <tr>
     <th colspan="5" align="center">Data User</th>

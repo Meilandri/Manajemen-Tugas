@@ -3,7 +3,7 @@
 <h3 align="center">Pukul : {{ $jam }}</h3>
 
 <hr>
- <table width="100%" border="ipx" style="border-collapse: collapse;">  
+ <table width="100%" border="1px" style="border-collapse: collapse;">  
     <thead>
     <tr>
     <th colspan="5" align="center">Data Tugas</th>
@@ -12,7 +12,7 @@
     <th width="20" align="center">No</th>
     <th width="20" align="center">Nama</th>
     <th width="20" align="center">Email</th>
-    <th width="20" align="center">Tugasl</th>
+    <th width="20" align="center">Tugas</th>
     <th width="20" align="center">Tanggal Mulai</th>
     <th width="20" align="center">Tanggal Selesai</th>
 

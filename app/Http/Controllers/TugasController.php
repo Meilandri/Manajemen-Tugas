@@ -24,9 +24,9 @@ class TugasController extends Controller
         return view('admin/tugas/index', $data);
         } else{
             $data = array(
-                'title'           => 'Data Tugas',
+                'title'               => 'Data Tugas',
                 'menuKaryawanTugas'   => 'active',
-                
+                'tugas'               => Tugas::with('user')->where('user_id', $user->id)->first(),
             );
             return view('karyawan/tugas/index', $data);
         }
@@ -121,14 +121,29 @@ class TugasController extends Controller
     }
 
     public function pdf(){
+        $user = Auth::user();
         $filename = now()->format('d-m-Y H.i.s');
-        $data = array(
+
+        if ($user->jabatan=='Admin'){
+            $data = array(
             'tugas'      => Tugas::with('user')->get(),
             'tanggal'    => now()->format('d-m-Y'),
             'jam'        => now()->format('H.i.s'),
         );
 
         $pdf = Pdf::loadView('admin/tugas/pdf', $data);
-        return $pdf->download('DataUser_'.$filename.' .pdf');
-    }
+        return $pdf->download('DataTugas_'.$filename.' .pdf');
+        } else {
+            $data = array(
+                'tanggal'    => now()->format('d-m-Y'),
+                'jam'        => now()->format('H.i.s'),
+                'tugas'      => Tugas::with('user')->where('user_id',$user->id)->first(),
+            );
+    
+            $pdf = Pdf::loadView('karyawan/tugas/pdf', $data);
+            return $pdf->download('DataTugas_'.$filename.' .pdf');
+            }
+        }
+        
+    
 }
