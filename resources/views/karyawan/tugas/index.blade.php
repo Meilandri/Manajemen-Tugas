@@ -79,7 +79,11 @@
                 </div>
             @else
                 <div class="row">
+                    <div class="col-6">
+                        Status
+                    </div>
                     <div class="col6">
+                        :
                         <span class="badge badge-dark">
                             AFK
                         </span>

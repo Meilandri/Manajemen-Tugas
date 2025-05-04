@@ -80,13 +80,18 @@ class UserController extends Controller
             'password.min'                   => 'Password Minimal 8 Karakter'
         ]);
 
-        $user = User::findOrFail($id);
+        $user = User::with('tugas')->findOrFail($id);
         $user->nama             = $request->nama;
         $user->email            = $request->email;
         $user->jabatan          = $request->jabatan;
+        if ($request->jabatan=='Admin'){
+            $user->is_tugas = false;
+            $user->tugas()->delete();
+        }
         if ($request->filled('password')){
             $user->password     = Hash::make($request->password);
         }
+       
         $user->save();
 
         return redirect()->route('user')->with('success', 'Data Berhasil Di Ubah');
